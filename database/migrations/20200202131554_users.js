@@ -31,8 +31,8 @@ exports.up = function(knex) {
     })
     .createTable("relocatingcost", rcost => {
       rcost.increments();
-      rcost.integer("DailyHotelCost");
-      rcost.integer("DaysHotelNeeded");
+      rcost.integer("HotelCost");
+      //rcost.integer("DaysHotelNeeded");
       rcost.integer("NewRentalDeposit");
       rcost.integer("UtilityConnection");
       rcost.integer("StorageUnit");
@@ -45,7 +45,6 @@ exports.up = function(knex) {
       rcost.integer("MentalHealthTreatment");
       rcost.integer("Other");
       rcost.string("OtherDescription");
-
       rcost
         .integer("user_id")
         .unique()
@@ -57,10 +56,10 @@ exports.up = function(knex) {
         .onDelete("CASCADE");
     });
 };
-
 exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("relocatingcost")
     .dropTableIfExists("monthlybudget")
     .dropTableIfExists("users");
 };
+
