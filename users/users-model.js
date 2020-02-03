@@ -1,5 +1,5 @@
 const db = require("../database/dbConfig");
-​
+
 module.exports = {
   getUserByUsername,
   addUser,
@@ -15,19 +15,19 @@ module.exports = {
   getRelocationCostTotal,
   getRelocationCostByID
 };
-​
+
 function getUserByUsername(username) {
   return db("users")
     .where({ username })
     .first();
 }
-​
+
 function getUserById(id) {
   return db("users")
     .where({ id })
     .first();
 }
-​
+
 function createMonthlyBudget(budget, id) {
   return db("monthlybudget")
     .insert({ ...budget, user_id: id })
@@ -60,9 +60,9 @@ function getMonthlyBudgetByID(id) {
     .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other','OtherDescription','user_id' )
     .first();    
 }
-​
+
 // relocation costs
-​
+
 function createRelocationCost(budget, id) {
   return db("relocationcost")
     .insert({ ...budget, user_id: id })
@@ -74,7 +74,6 @@ function updateRelocationCost(budget, id) {
     .update(budget)
     .then(count => (count > 0 ? this.getRelocationCostByID(id) : null))
 }
-​
 function getRelocationCost(username) {
   return db("users")
     .join("relocationcost", "users.id", "relocationcost.user_id")
@@ -89,7 +88,7 @@ function getRelocationCostTotal(username) {
     .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
     .first()
 }
-​
+
 function getRelocationCostByID(id) {
   return db("users")
     .join("relocationcost", "users.id", "relocationcost.user_id")
@@ -97,7 +96,7 @@ function getRelocationCostByID(id) {
     .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
     .first();    
 }
-​
+
 function addUser(user) {
   return db("users").insert(user);
 } 
