@@ -78,14 +78,14 @@ function getRelocationCost(username) {
   return db("users")
     .join("relocationcost", "users.id", "relocationcost.user_id")
     .where("users.username", username)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans', 'OtherDescription','Other')
+    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
     .first()
 }
 function getRelocationCostTotal(username) {
   return db("users")
     .join("relocationcost", "users.id", "relocationcost.user_id")
     .where("users.username", username)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other')
+    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
     .first()
 }
 
@@ -93,7 +93,7 @@ function getRelocationCostByID(id) {
   return db("users")
     .join("relocationcost", "users.id", "relocationcost.user_id")
     .where("users.id", id)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other','OtherDescription','user_id' )
+    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
     .first();    
 }
 
