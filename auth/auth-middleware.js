@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      res.status(400).json({
+      res.status(401).json({
         message: "No token provided (are you logged in?)."
       });
     }

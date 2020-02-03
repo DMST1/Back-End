@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Users = require("./users-model");
-
 router.get("/", (req, res) => {
   Users.getUserByUsername(req.user.username)
     .then(user => {
@@ -14,6 +13,7 @@ router.get("/", (req, res) => {
       res.status(500).json({ message: "Error" });
     });
 });
+
 router.get("/mb", (req, res) => {
   Users.getMonthlyBudget(req.user.username).then(mb => {
     if (mb) {

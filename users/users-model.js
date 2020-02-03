@@ -53,7 +53,6 @@ function getMonthlyBudgetTotal(username) {
     .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other')
     .first()
 }
-
 function getMonthlyBudgetByID(id) {
   return db("users")
     .join("monthlybudget", "users.id", "monthlybudget.user_id")
