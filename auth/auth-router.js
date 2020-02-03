@@ -20,6 +20,7 @@ router.post("/register", (req, res) => {
           res.status(201).json({ username, token: generateToken({username, password: hashedPassword}), userId: creds[0] });
         })
         .catch(error => {
+          console.log(error)
           res.status(500).json({
             message:
               "Error while saving credentials to DB, make sure you provided the correct data for registration. Is username already in use?"
