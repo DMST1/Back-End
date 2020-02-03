@@ -13,5 +13,6 @@ function getUserByUsername(username) {
 
 function addUser(user) {
     return db("users").insert(user, 'id')
+    .returning('*').toString()
     
 }
