@@ -30,7 +30,7 @@ function getUserById(id) {
 
 function createMonthlyBudget(budget, id) {
   return db("monthlybudget")
-    .insert({ ...budget, user_id: id })
+    .insert({ ...budget, user_id: id }, 'id')
     .then(count => (count > 0 ? this.getMonthlyBudgetByID(id) : null));
 }
 function updateMonthlyBudget(budget, id) {
@@ -65,7 +65,7 @@ function getMonthlyBudgetByID(id) {
 
 function createRelocationCost(budget, id) {
   return db("relocationcost")
-    .insert({ ...budget, user_id: id })
+    .insert({ ...budget, user_id: id }, 'id')
     .then(count => (count > 0 ? this.getRelocationCostByID(id) : null));
 }
 function updateRelocationCost(budget, id) {
@@ -98,5 +98,5 @@ function getRelocationCostByID(id) {
 }
 
 function addUser(user) {
-  return db("users").insert(user);
+  return db("users").insert(user, 'id');
 } 
