@@ -13,9 +13,16 @@ module.exports = {
   updateRelocationCost,
   getRelocationCost,
   getRelocationCostTotal,
-  getRelocationCostByID
+  getRelocationCostByID,
+  deleteUserByUsername
 };
-
+function deleteUserByUsername(username) {
+  return db("users")
+    .join("monthlybudget", "users.id", "monthlybudget.user_id")
+    .join("relocationcost", "users.id", "relocationcost.user_id")
+    .where({ username })
+    .del();
+}
 function getUserByUsername(username) {
   return db("users")
     .where({ username })
@@ -30,73 +37,145 @@ function getUserById(id) {
 
 function createMonthlyBudget(budget, id) {
   return db("monthlybudget")
-    .insert({ ...budget, user_id: id }, 'id')
+    .insert({ ...budget, user_id: id }, "id")
     .then(count => (count > 0 ? this.getMonthlyBudgetByID(id) : null));
 }
 function updateMonthlyBudget(budget, id) {
   return db("monthlybudget")
     .where("user_id", id)
     .update(budget)
-    .then(count => (count > 0 ? this.getMonthlyBudgetByID(id) : null))
+    .then(count => (count > 0 ? this.getMonthlyBudgetByID(id) : null));
 }
 function getMonthlyBudget(username) {
   return db("users")
     .join("monthlybudget", "users.id", "monthlybudget.user_id")
     .where("users.username", username)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans', 'OtherDescription','Other')
-    .first()
+    .select(
+      "Transportation",
+      "Food",
+      "HealthInsurance",
+      "CarInsurance",
+      "HealthLoans",
+      "CarLoans",
+      "PersonalLoans",
+      "OtherDescription",
+      "Other"
+    )
+    .first();
 }
 function getMonthlyBudgetTotal(username) {
   return db("users")
     .join("monthlybudget", "users.id", "monthlybudget.user_id")
     .where("users.username", username)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other')
-    .first()
+    .select(
+      "Transportation",
+      "Food",
+      "HealthInsurance",
+      "CarInsurance",
+      "HealthLoans",
+      "CarLoans",
+      "PersonalLoans",
+      "Other"
+    )
+    .first();
 }
 function getMonthlyBudgetByID(id) {
   return db("users")
     .join("monthlybudget", "users.id", "monthlybudget.user_id")
     .where("users.id", id)
-    .select('Transportation','Food','HealthInsurance','CarInsurance','HealthLoans','CarLoans','PersonalLoans','Other','OtherDescription','user_id' )
-    .first();    
+    .select(
+      "Transportation",
+      "Food",
+      "HealthInsurance",
+      "CarInsurance",
+      "HealthLoans",
+      "CarLoans",
+      "PersonalLoans",
+      "Other",
+      "OtherDescription",
+      "user_id"
+    )
+    .first();
 }
 
 // relocation costs
 
 function createRelocationCost(budget, id) {
-  return db("relocationcost")
-    .insert({ ...budget, user_id: id }, 'id')
+  return db("relocatingcost")
+    .insert({ ...budget, user_id: id }, "id")
     .then(count => (count > 0 ? this.getRelocationCostByID(id) : null));
 }
 function updateRelocationCost(budget, id) {
-  return db("relocationcost")
+  return db("relocatingcost")
     .where("user_id", id)
     .update(budget)
-    .then(count => (count > 0 ? this.getRelocationCostByID(id) : null))
+    .then(count => (count > 0 ? this.getRelocationCostByID(id) : null));
 }
 function getRelocationCost(username) {
   return db("users")
-    .join("relocationcost", "users.id", "relocationcost.user_id")
+    .join("relocatingcost", "users.id", "relocatingcost.user_id")
     .where("users.username", username)
-    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
-    .first()
+    .select(
+      "HotelCost",
+      "NewRentalDeposit",
+      "UtilityConnection",
+      "StorageUnit",
+      "NewMonthlyRent",
+      "CarRentalCost",
+      "CellDisconnect",
+      "CellConnect",
+      "TruckRental",
+      "GasForTruck",
+      "MentalHealthTreatment",
+      "OtherDescription",
+      "Other"
+    )
+    .first();
 }
 function getRelocationCostTotal(username) {
   return db("users")
-    .join("relocationcost", "users.id", "relocationcost.user_id")
+    .join("relocatingcost", "users.id", "relocatingcost.user_id")
     .where("users.username", username)
-    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
-    .first()
+    .select(
+      "HotelCost",
+      "NewRentalDeposit",
+      "UtilityConnection",
+      "StorageUnit",
+      "NewMonthlyRent",
+      "CarRentalCost",
+      "CellDisconnect",
+      "CellConnect",
+      "TruckRental",
+      "GasForTruck",
+      "MentalHealthTreatment",
+      "OtherDescription",
+      "Other"
+    )
+    .first();
 }
 
 function getRelocationCostByID(id) {
   return db("users")
-    .join("relocationcost", "users.id", "relocationcost.user_id")
+    .join("relocatingcost", "users.id", "relocatingcost.user_id")
     .where("users.id", id)
-    .select('HotelCost','NewRentalDeposit','UtilityConnection','StorageUnit','NewMonthlyRent','CarRentalCost', 'CellDiconnect', 'CellConnect', 'TruckRental', 'GasForTruck','MentalHealthTreatment','OtherDescription','Other')
-    .first();    
+    .select(
+      "HotelCost",
+      "NewRentalDeposit",
+      "UtilityConnection",
+      "StorageUnit",
+      "NewMonthlyRent",
+      "CarRentalCost",
+      "CellDisconnect",
+      "CellConnect",
+      "TruckRental",
+      "GasForTruck",
+      "MentalHealthTreatment",
+      "OtherDescription",
+      "Other"
+    )
+    .first();
 }
 
 function addUser(user) {
-  return db("users").insert(user, 'id');
-} 
+  return db("users").insert(user, "id");
+}
