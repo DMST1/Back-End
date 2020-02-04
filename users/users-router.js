@@ -13,17 +13,24 @@ router.get("/", (req, res) => {
       res.status(500).json({ message: "Error" });
     });
 });
+router.delete("/", (req, res) => {
+  Users.deleteUserByUsername(req.user.username)
+    .then(deletedAcc => {
+      res.status(200).json(deletedAcc);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Error deleting account" });
+    });
+});
 
 router.get("/mb", (req, res) => {
   Users.getMonthlyBudget(req.user.username).then(mb => {
     if (mb) {
       res.status(200).json(mb);
     } else {
-      res
-        .status(500)
-        .json({
-          message: "This User hasn't filled out their monthly budget yet!"
-        });
+      res.status(500).json({
+        message: "This User hasn't filled out their monthly budget yet!"
+      });
     }
   });
 });
@@ -33,14 +40,12 @@ router.get("/mb/total", (req, res) => {
     if (mb) {
       const totalValue = obj => Object.values(obj).reduce((a, b) => a + b);
       console.log(totalValue(mb));
-      res.mbTotal = totalValue(mb)
+      res.mbTotal = totalValue(mb);
       res.status(200).json(totalValue(mb));
     } else {
-      res
-        .status(500)
-        .json({
-          message: "This User hasn't filled out their monthly budget yet"
-        });
+      res.status(500).json({
+        message: "This User hasn't filled out their monthly budget yet"
+      });
     }
   });
 });
@@ -86,11 +91,9 @@ router.get("/rc", (req, res) => {
     if (rc) {
       res.status(200).json(rc);
     } else {
-      res
-        .status(500)
-        .json({
-          message: "This User hasn't filled out their relocation costs yet!"
-        });
+      res.status(500).json({
+        message: "This User hasn't filled out their relocation costs yet!"
+      });
     }
   });
 });
@@ -100,14 +103,12 @@ router.get("/rc/total", (req, res) => {
     if (rc) {
       const totalValue = obj => Object.values(obj).reduce((a, b) => a + b);
       console.log(totalValue(rc));
-      res.rcTotal = totalValue(rc)
+      res.rcTotal = totalValue(rc);
       res.status(200).json(totalValue(rc));
     } else {
-      res
-        .status(500)
-        .json({
-          message: "This User hasn't filled out their relocation costs budget yet"
-        });
+      res.status(500).json({
+        message: "This User hasn't filled out their relocation costs budget yet"
+      });
     }
   });
 });
@@ -121,7 +122,9 @@ router.post("/rc", (req, res) => {
         .catch(err => {
           res
             .status(500)
-            .json({ message: "Error, do you already have a relocation costs budget?" });
+            .json({
+              message: "Error, do you already have a relocation costs budget?"
+            });
         });
     })
     .catch(err =>
