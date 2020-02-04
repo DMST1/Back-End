@@ -14,14 +14,22 @@ module.exports = {
   getRelocationCost,
   getRelocationCostTotal,
   getRelocationCostByID,
-  deleteUserByUsername
+  deleteUserByID
 };
-function deleteUserByUsername(username) {
+function deleteUserByID(id) {
   return db("users")
-    .join("monthlybudget", "users.id", "monthlybudget.user_id")
-    .join("relocationcost", "users.id", "relocationcost.user_id")
-    .where({ username })
-    .del();
+    .where({ id })
+    .del()
+    .then(count => {
+      return db("monthlybudget")
+        .where("user_id", id)
+        .del()
+        .then(count => {
+          return db("relocatingcost")
+            .where("user_id", id)
+            .del();
+        });
+    });
 }
 function getUserByUsername(username) {
   return db("users")

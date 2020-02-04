@@ -14,12 +14,18 @@ router.get("/", (req, res) => {
     });
 });
 router.delete("/", (req, res) => {
-  Users.deleteUserByUsername(req.user.username)
-    .then(deletedAcc => {
-      res.status(200).json(deletedAcc);
+  Users.getUserByUsername(req.user.username)
+    .then(user => {
+      Users.deleteUserByID(user.id)
+        .then(deletedAcc => {
+          res.status(200).json(deletedAcc);
+        })
+        .catch(err => {
+          res.status(500).json({ message: "Error deleting account" });
+        });
     })
     .catch(err => {
-      res.status(500).json({ message: "Error deleting account" });
+      res.status(500).json({ message: "Error" });
     });
 });
 
@@ -49,23 +55,23 @@ router.get("/mb/total", (req, res) => {
     }
   });
 });
-router.post("/mb", (req, res) => {
-  Users.getUserByUsername(req.user.username)
-    .then(user => {
-      Users.createMonthlyBudget(req.body, user.id)
-        .then(response => {
-          res.status(201).json(response);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ message: "Error, do you already have a budget?" });
-        });
-    })
-    .catch(err =>
-      res.status(500).json({ message: "This User Probably doesn't exist" })
-    );
-});
+// router.post("/mb", (req, res) => {
+//   Users.getUserByUsername(req.user.username)
+//     .then(user => {
+//       Users.createMonthlyBudget(req.body, user.id)
+//         .then(response => {
+//           res.status(201).json(response);
+//         })
+//         .catch(err => {
+//           res
+//             .status(500)
+//             .json({ message: "Error, do you already have a budget?" });
+//         });
+//     })
+//     .catch(err =>
+//       res.status(500).json({ message: "This User Probably doesn't exist" })
+//     );
+// });
 
 router.put("/mb", (req, res) => {
   Users.getUserByUsername(req.user.username)
@@ -112,25 +118,23 @@ router.get("/rc/total", (req, res) => {
     }
   });
 });
-router.post("/rc", (req, res) => {
-  Users.getUserByUsername(req.user.username)
-    .then(user => {
-      Users.createRelocationCost(req.body, user.id)
-        .then(response => {
-          res.status(201).json(response);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({
-              message: "Error, do you already have a relocation costs budget?"
-            });
-        });
-    })
-    .catch(err =>
-      res.status(500).json({ message: "This User Probably doesn't exist" })
-    );
-});
+// router.post("/rc", (req, res) => {
+//   Users.getUserByUsername(req.user.username)
+//     .then(user => {
+//       Users.createRelocationCost(req.body, user.id)
+//         .then(response => {
+//           res.status(201).json(response);
+//         })
+//         .catch(err => {
+//           res.status(500).json({
+//             message: "Error, do you already have a relocation costs budget?"
+//           });
+//         });
+//     })
+//     .catch(err =>
+//       res.status(500).json({ message: "This User Probably doesn't exist" })
+//     );
+// });
 
 router.put("/rc", (req, res) => {
   Users.getUserByUsername(req.user.username)
