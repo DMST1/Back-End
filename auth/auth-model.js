@@ -27,3 +27,10 @@ function addUser(user) {
     });
   //then create table for
 }
+
+async function addUser2(user) {
+  let id = await db("users").insert(user, "id");
+  await db("monthlybudget").insert(id);
+  await db("relocatingcost").insert(id);
+  return id;
+}
