@@ -156,7 +156,6 @@ function getRelocationCostTotal(username) {
       "TruckRental",
       "GasForTruck",
       "MentalHealthTreatment",
-      "OtherDescription",
       "Other"
     )
     .first();
