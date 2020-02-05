@@ -24,10 +24,13 @@ function deleteUserByID(id) {
       return db("monthlybudget")
         .where("user_id", id)
         .del()
-        .then(count => {
+        .then(count2 => {
           return db("relocatingcost")
             .where("user_id", id)
-            .del();
+            .del()
+            .then(count3 => {
+              return count
+            });
         });
     });
 }
