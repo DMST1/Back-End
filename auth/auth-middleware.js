@@ -2,8 +2,11 @@ const jwt = require("jsonwebtoken");
 const secrets = require("../auth/secrets");
 
 module.exports = (req, res, next) => {
-  if (process.env.DB_ENV === "testing") {
+  if (process.env.NODE_ENV === "testing") {
+    req.user = req.body
+    // req.body.username = undefined
     next();
+    
   } else {
     let token = req.headers.authorization;
 

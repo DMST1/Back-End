@@ -52,21 +52,21 @@ describe("Auth Model", function() {
       expect(user.username).toBe('BillSagget');
     });
   });
-  describe("createMonthlyBudget(budget, id)", function() {
-    beforeEach(async () => {
-      await db("users").truncate();
-      await db("monthlybudget").truncate();
-      await db("relocatingcost").truncate();
-    });
-    it('Creates a Monthly budget by passing in body info and userid', async function() {
-        let budget = {
-            transportation: 500
-        }
-         await Users.addUser({username: "BillSagget", password: "BobBean"})
-         let budgets = await Users.createMonthlyBudget(budget, 1);
-         expect(budgets.Transportation).toBe(500);
-    })
-  });
+  // describe("createMonthlyBudget(budget, id)", function() {
+  //   beforeEach(async () => {
+  //     await db("users").truncate();
+  //     await db("monthlybudget").truncate();
+  //     await db("relocatingcost").truncate();
+  //   });
+  //   it('Creates a Monthly budget by passing in body info and userid', async function() {
+  //       let budget = {
+  //           transportation: 500
+  //       }
+  //        await Users.addUser({username: "BillSagget", password: "BobBean"})
+  //        let budgets = await Users.createMonthlyBudget(budget, 1);
+  //        expect(budgets.Transportation).toBe(500);
+  //   })
+  // });
   describe('updateMonthlyBudgetByUsername', function() {
      it('Updates a monthly budget by passing in body info and userid', async function(){
         let budget = {
