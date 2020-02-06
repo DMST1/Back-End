@@ -74,6 +74,9 @@ router.get("/mb/total", (req, res) => {
 // });
 
 router.put("/mb", (req, res) => {
+  if(process.env.NODE_ENV === 'testing'){
+    req.user = {username: 'OBST'}
+  }
   Users.getUserByUsername(req.user.username)
     .then(user => {
       Users.updateMonthlyBudget(req.body, user.id)
