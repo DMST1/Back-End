@@ -49,7 +49,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(err => {
-      res.status(401).json({ message: "Invalid Credentials" });
+      res.status(500).json({ message: "Error" });
     });
 });
 
